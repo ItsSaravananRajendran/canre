@@ -54,6 +54,7 @@ class CanvasDOM {
     this.ctx = canvas.getContext("2d");
     const root = new Node("parent");
     this.dom = root;
+    this.domNodes = {};
     ["render"].forEach((method) => (this[method] = this[method].bind(this)));
   }
 
@@ -80,6 +81,22 @@ class CanvasDOM {
     this.ctx.beginPath();
     this.ctx.fillStyle = fill;
     this.ctx.fillText(text, x, y);
+    this.ctx.stroke();
+  }
+
+  createImage(typeSpecificProps, commonProps) {
+    const { x, y } = commonProps;
+    const { src, width, height } = typeSpecificProps;
+    if (this.domNodes[src]) {
+      this.ctx.drawImage(this.domNodes[src], x, y);
+    } else {
+      const image = new Image(width, height);
+      image.src = src.default;
+      image.onload = () => {
+        this.ctx.drawImage(image, x, y);
+        this.domNodes[src] = image;
+      };
+    }
   }
 
   renderElement(node) {
@@ -91,6 +108,9 @@ class CanvasDOM {
         break;
       case "text":
         this.createText(typeSpecificProps, commonProps);
+        break;
+      case "image":
+        this.createImage(typeSpecificProps, commonProps);
         break;
     }
 

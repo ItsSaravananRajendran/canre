@@ -16,9 +16,28 @@ class App extends Component {
     const { x, y } = this.state;
     return (
       <view x={x} y={y} fill="#0000ff" height={20} width={20}>
-        <text x={20} y={20} fill="#ff00ff">
-          Hello React Native Custom Renderer
-        </text>
+        <view x={x + 10} y={y} fill="#0000ff" height={20} width={20} />
+        <view x={x} y={y + 10} fill="#0000ff" height={20} width={20} />
+        <view x={x + 10} y={y + 10} fill="#0000ff" height={20} width={20} />
+        <view x={x - 10} y={y} fill="#0000ff" height={20} width={20} />
+        <view x={x} y={y - 10} fill="#0000ff" height={20} width={20} />
+        <view x={x - 10} y={y - 10} fill="#0000ff" height={20} width={20} />
+        <view x={x + 30} y={y + 30} fill="#0000ff" height={20} width={20} />
+        <view x={x} y={y - 30} fill="#0000ff" height={20} width={20} />
+
+        <text
+          x={20}
+          y={20}
+          fill="#ff00ff"
+          text="Hello React Native Custom Renderer"
+        />
+        <image
+          src={require("./test.webp")}
+          height={10}
+          width={10}
+          x={300}
+          y={300}
+        />
       </view>
     );
   }

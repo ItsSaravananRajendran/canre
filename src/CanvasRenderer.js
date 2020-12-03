@@ -28,7 +28,11 @@ const hostConfig = {
     workInProgress
   ) => {
     const { x, y, fill, ...typeSpecificProps } = newProps;
-    const node = new Node(type, typeSpecificProps, { x, y, fill });
+    const node = new Node(type, typeSpecificProps, {
+      x,
+      y,
+      fill,
+    });
     return node;
   },
   createTextInstance: (...args) => {
