@@ -76,8 +76,9 @@ class CanvasDOM {
 
   createText(typeSpecificProps, commonProps) {
     const { text } = typeSpecificProps;
-    const { x, y, fill } = commonProps;
+    const { x, y, fill, fontSize = "10px" } = commonProps;
     this.ctx.beginPath();
+    this.ctx.font = fontSize;
     this.ctx.fillStyle = fill;
     this.ctx.fillText(text, x, y);
   }

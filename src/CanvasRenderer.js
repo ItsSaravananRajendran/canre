@@ -27,8 +27,8 @@ const hostConfig = {
     _currentHostContext,
     workInProgress
   ) => {
-    const { x, y, fill, ...typeSpecificProps } = newProps;
-    const node = new Node(type, typeSpecificProps, { x, y, fill });
+    const { x, y, fill, fontSize, ...typeSpecificProps } = newProps;
+    const node = new Node(type, typeSpecificProps, { x, y, fill, fontSize });
     return node;
   },
   createTextInstance: (...args) => {
@@ -45,9 +45,12 @@ const hostConfig = {
     parent.appendChild(child);
   },
   prepareUpdate: (instance, type, oldProps, newProps, ...args) => {
-    const payload = { commonProps: {} };
+    const payload = { commonProps: {}, typeSpecificProps: {} };
     if (oldProps.x !== newProps.x) {
       payload.commonProps.x = newProps.x;
+    }
+    if (oldProps.text !== newProps.text) {
+      payload.typeSpecificProps.text = newProps.text;
     }
     return payload;
   },
@@ -59,8 +62,12 @@ const hostConfig = {
     newProps,
     ...args
   ) => {
-    const { commonProps } = instance;
+    const { commonProps, typeSpecificProps } = instance;
     instance.commonProps = { ...commonProps, ...updatePayload.commonProps };
+    instance.typeSpecificProps = {
+      ...typeSpecificProps,
+      ...updatePayload.typeSpecificProps,
+    };
     root.render();
   },
   commitTextUpdate: (textInstance, oldText, newText) => {
